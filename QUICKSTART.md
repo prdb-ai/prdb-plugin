@@ -2,7 +2,7 @@
 
 Read papers with your agent. Search PRDB, upload your own private PDFs, save exact highlights and comments, and keep private reviews in the Library you use on the website.
 
-**Plugin 0.2.0 · Codex · https://prdb.ai/mcp.** Distributed through [prdb-plugin](https://github.com/giorgioercixu/prdb-plugin), not an OpenAI-reviewed directory listing. Fresh-machine testing is still in progress. Use the matching package for your environment; staging and production accounts are separate.
+**Plugin 0.2.0 · Codex · https://prdb.ai/mcp.** Distributed through [prdb-plugin](https://github.com/prdb-ai/prdb-plugin), not an OpenAI-reviewed directory listing. Fresh-machine testing is still in progress. Use the matching package for your environment; staging and production accounts are separate.
 
 ## 1. Create your account
 
@@ -12,12 +12,12 @@ Read papers with your agent. Search PRDB, upload your own private PDFs, save exa
 
 Open Codex Desktop and paste this into a chat:
 
-> Install the PRDB public trial from https://github.com/giorgioercixu/prdb-plugin, pinned to v0.2.0. You may add this one marketplace and install prdb@prdb. Check that the Codex CLI supports plugin commands first, preserve my other settings, and do not copy credentials from another computer. Tell me when to start a new chat and authorize PRDB in my browser.
+> Install the PRDB public trial from https://github.com/prdb-ai/prdb-plugin, pinned to v0.2.0. You may add this one marketplace and install prdb@prdb. Check that the Codex CLI supports plugin commands first, preserve my other settings, and do not copy credentials from another computer. Tell me when to start a new chat and authorize PRDB in my browser.
 
 The supported CLI path, for you or your agent:
 
 ```sh
-codex plugin marketplace add giorgioercixu/prdb-plugin --ref v0.2.0
+codex plugin marketplace add prdb-ai/prdb-plugin --ref v0.2.0
 codex plugin add prdb@prdb
 ```
 
@@ -56,14 +56,14 @@ Public review publication is optional: the agent prepares a preview and you pers
 
 ## Update, revoke or remove
 
-- Read the next release notes before changing versions. The pinned v0.2.0 does not follow `main`. To switch to an approved newer tag, repeat `codex plugin marketplace add giorgioercixu/prdb-plugin --ref <new-tag>`, then refresh the marketplace/install according to the client. Start a new chat and check the actual installed version.
+- Read the next release notes before changing versions. The pinned v0.2.0 does not follow `main`. To switch to an approved newer tag, repeat `codex plugin marketplace add prdb-ai/prdb-plugin --ref <new-tag>`, then refresh the marketplace/install according to the client. Start a new chat and check the actual installed version.
 - Revoke in [My Account → Connections](https://prdb.ai/profile#connections). Local uninstall is not PRDB revocation. Your saved material remains available on the website.
 - Uninstall: `codex plugin remove prdb@prdb`. Remove this marketplace too: `codex plugin marketplace remove prdb`.
 - For an old `prdb-reading-preview`, explicitly disable/remove it and revoke its connection when no longer needed. Then install PRDB and authorize it anew. Old grants are not silently expanded.
 
 ## Feedback
 
-Use [public installation/UX issues](https://github.com/giorgioercixu/prdb-plugin/issues/new/choose) for non-private reports, or [PRDB Support](https://prdb.ai/support) / issues@prdb.ai for private reports. Include OS, Codex version, plugin version, failing step, expected/actual result and a redacted error/screenshot. Never post passwords, tokens, private PDFs or notes publicly.
+Use [public installation/UX issues](https://github.com/prdb-ai/prdb-plugin/issues/new/choose) for non-private reports, or [PRDB Support](https://prdb.ai/support) / issues@prdb.ai for private reports. Include OS, Codex version, plugin version, failing step, expected/actual result and a redacted error/screenshot. Never post passwords, tokens, private PDFs or notes publicly.
 
 Try one paper, then two or three more; note the manual steps and time required. Fresh-machine human feedback is separate from parser/SDK/automated checks.
 
@@ -74,3 +74,7 @@ Choose the optional operation permissions in browser OAuth, then ask your agent 
 Page images and long-page continuation complement text reading. Images do not provide OCR or accurate highlight coordinates by themselves. Public reviews still use PRDB's owner-confirmed browser preview; the experimental native chat confirmation is disabled until actual client verification.
 
 Recent update: 2026-10-13 PRDB 0.2.0 release batch; three skills, optional operation permissions and granted-file transfers. Fresh-machine human acceptance remains pending.
+
+## Organization migration
+
+Use prdb-ai/prdb-plugin as the marketplace source, pinned to v0.2.0. The plugin identity, production MCP origin, package bytes and authorization scopes are unchanged. Existing packages retain older links that GitHub redirects. Production new-user registration is currently paused; existing sign-in remains available.

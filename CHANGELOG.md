@@ -1,5 +1,10 @@
 # PRDB plugin releases
 
+## 2026-10-20 · repository organization migration
+
+- Repository ownership moved to prdb-ai; current installation/feedback guides use the organization URL.
+- Existing version tags, packaged plugin files and release asset bytes are unchanged. This is not a new plugin version or scope expansion.
+
 ## 0.2.0 · 2026-10-13 · public trial
 
 - Three skills: setup, reading and ordinary daily actions. Optional operation permissions are selected in browser OAuth; old grants stay unchanged.
