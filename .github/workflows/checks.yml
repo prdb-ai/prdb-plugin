@@ -1,0 +1,46 @@
+name: PRDB plugin checks
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+  workflow_dispatch:
+    inputs:
+      package_candidate:
+        description: Build an unpublished candidate ZIP artifact (no tag or Release)
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+jobs:
+  validate:
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Check patch whitespace
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: git diff --check "$BASE_SHA" HEAD
+      - name: Validate distributed plugin and helper syntax
+        run: python3 .github/check_plugin.py
+      - name: Test packaging boundaries
+        run: python3 -m unittest discover -s .github -p 'test_*.py' -v
+      - name: Build a separately requested candidate
+        if: github.event_name == 'workflow_dispatch' && inputs.package_candidate
+        run: python3 .github/check_plugin.py --output "$RUNNER_TEMP/prdb-plugin-candidate"
+      - name: Save unpublished candidate artifact
+        if: github.event_name == 'workflow_dispatch' && inputs.package_candidate
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: prdb-plugin-candidate
+          path: ${{ runner.temp }}/prdb-plugin-candidate
+          retention-days: 7
+          if-no-files-found: error
