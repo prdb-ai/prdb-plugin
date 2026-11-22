@@ -6,4 +6,6 @@
 
 Skills grant no permissions. Old connections require explicit reauthorization for new operations. Public reviews need owner confirmation; ordinary skills never grant admin access. Chat attachments require actual client file access.
 
-Recent update: 2026-10-13 PRDB 0.2.0 release batch with three ordinary-user skills.
+The unpublished selected-file helper rejects nonregular and observed changed lease files before upload. Skills, permission semantics and the fixed public v0.2.0 package version remain unchanged.
+
+Recent update: 2026-11-21 reference unpublished helper hardening without a permission or release change.

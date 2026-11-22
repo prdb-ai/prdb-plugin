@@ -33,6 +33,8 @@ jobs:
         run: python3 .github/check_plugin.py
       - name: Test packaging boundaries
         run: python3 -m unittest discover -s .github -p 'test_*.py' -v
+      - name: Test selected-file lease boundaries
+        run: python3 -B -m unittest discover -s tests -p 'test_*.py' -v
       - name: Build a separately requested candidate
         if: github.event_name == 'workflow_dispatch' && inputs.package_candidate
         run: python3 .github/check_plugin.py --output "$RUNNER_TEMP/prdb-plugin-candidate"

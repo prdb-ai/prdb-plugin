@@ -39,9 +39,12 @@ Remote reading requires no local MCP server or Python package. A single PDF can 
 - [START_HERE](START_HERE.md), [CONTRIBUTING](CONTRIBUTING.md) and [ROADMAP](ROADMAP.md): maintainer task/review/publication workflow; users follow QUICKSTART.
 - [SECURITY](SECURITY.md): private reporting channel.
 - [LICENSE-NOTICE](LICENSE-NOTICE.md): current distribution notice.
+- [tests](tests/README.md): synthetic optional-helper regressions, without real transport or credentials.
 
 Use [PRDB Support](https://prdb.ai/support) or issues@prdb.ai for private reports. Do not include passwords, tokens, private PDFs or notes in public issues.
 
 The repository moved to the PRDB organization on 2026-10-20. Existing v0.1.0/v0.2.0 tags, plugin files and release assets are unchanged. Older packaged links redirect to the new repository; do not replace a fixed release ZIP just to change those links. New installations may use prdb-ai/prdb-plugin with the same v0.2.0 pin and prdb@prdb identity. Production registration is currently paused; existing users can sign in.
 
-Recent update: 2026-10-21 independent maintainer workflow and automatic package validation; fixed releases unchanged.
+Unreleased helper hardening validates lease files through a bounded regular-file descriptor read and rejects observed file changes before upload. [Regression scope](tests/README.md) distinguishes source checks from real-client acceptance. The pinned v0.2.0 tag and release assets do not receive this correction and remain unchanged; merging this source publishes no new plugin version.
+
+Recent update: 2026-11-22 lease-file hardening and synthetic regressions integrated with independent ready-PR validation; fixed public releases unchanged.
