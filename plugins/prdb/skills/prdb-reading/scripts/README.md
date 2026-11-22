@@ -5,4 +5,6 @@
 
 Keep ticket/lease/journal files private (0600) and remove consumed secrets. Neither helper installs a daemon or reads third-party accounts. No pypdf means metadata extraction is unavailable, not successful. Without a supported runtime or client-exposed file, use browser import or paper-page Upload.
 
-Recent update: 2026-10-13 PRDB 0.2.0 adds explicitly granted-file transfer alongside the existing picker.
+The unpublished selected_files.py source reads only a regular mode-0600 lease of at most 10,000 bytes. It uses no-follow/nonblocking descriptor acquisition, checks the opened file and observed path metadata, and rejects changes before network access. [Synthetic tests](../../../../../tests/README.md) cover FIFO refusal, replacement/permission/size races, closure and successful transfer. These guards are not a filesystem snapshot against arbitrary concurrent writers. Public v0.2.0 and release assets remain unchanged.
+
+Recent update: 2026-11-21 unpublished bounded lease acquisition with refusal and healthy controls.

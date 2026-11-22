@@ -73,4 +73,6 @@ Choose the optional operation permissions in browser OAuth, then ask your agent 
 
 Page images and long-page continuation complement text reading. Images do not provide OCR or accurate highlight coordinates by themselves. Public reviews still use PRDB's owner-confirmed browser preview; the experimental native chat confirmation is disabled until actual client verification.
 
-Recent update: 2026-10-13 PRDB 0.2.0 release batch; three skills, optional operation permissions and granted-file transfers. Fresh-machine human acceptance remains pending.
+Unpublished source hardening rejects nonregular or changed lease files before transport. Its [synthetic regressions](../../tests/README.md) do not update the fixed public v0.2.0 installation or replace fresh-machine human acceptance.
+
+Recent update: 2026-11-21 unpublished lease-file hardening; version and release assets unchanged.

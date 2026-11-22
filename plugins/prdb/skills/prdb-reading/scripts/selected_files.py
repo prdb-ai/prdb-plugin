@@ -99,15 +99,43 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
         return None
 
 
-def upload(root, relative, lease_file):
+def read_lease(lease_file):
+    """Read one unchanged private regular file without blocking on a special file."""
     lease_path = Path(lease_file)
-    if (
-        lease_path.is_symlink()
-        or stat.S_IMODE(lease_path.stat().st_mode) != 0o600
-        or lease_path.stat().st_size > 10000
-    ):
+    before = lease_path.lstat()
+    if not stat.S_ISREG(before.st_mode) or stat.S_IMODE(before.st_mode) != 0o600 or before.st_size > 10000:
         raise ValueError("Use a regular mode-600 lease file.")
-    ticket = json.loads(lease_path.read_text())
+
+    def identity(info):
+        return (info.st_dev, info.st_ino, info.st_mode, info.st_size, info.st_mtime_ns, info.st_ctime_ns)
+
+    try:
+        fd = os.open(lease_path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
+    except OSError:
+        raise ValueError("Lease file changed before it could be read.") from None
+    try:
+        opened = os.fstat(fd)
+        if identity(opened) != identity(before):
+            raise ValueError("Lease file changed before it could be read.")
+        data = os.read(fd, 10001)
+        try:
+            current = lease_path.lstat()
+        except OSError:
+            raise ValueError("Lease file changed while it was being read.") from None
+        if (
+            len(data) != before.st_size
+            or len(data) > 10000
+            or identity(os.fstat(fd)) != identity(before)
+            or identity(current) != identity(before)
+        ):
+            raise ValueError("Lease file changed while it was being read.")
+    finally:
+        os.close(fd)
+    return json.loads(data.decode("utf-8"))
+
+
+def upload(root, relative, lease_file):
+    ticket = read_lease(lease_file)
     _, data = selected(root, relative)
     if hashlib.sha256(data).hexdigest() != ticket["sha256"]:
         raise ValueError("The selected PDF changed; prepare a fresh upload.")
